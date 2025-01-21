@@ -20,11 +20,25 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/user" element={<UserPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-      </Routes>
+      <main>
+        <Routes>
+          {/* HomePage route */}
+          <Route
+            path="/"
+            element={<HomePage favorites={favorites} toggleFavorite={toggleFavorite} />}
+          />
+          {/* FavoritesPage route */}
+          <Route
+            path="/favorites"
+            element={<UserPage favorites={favorites} toggleFavorite={toggleFavorite} />}
+          />
+          {/* AdminPage route */}
+          <Route
+            path="/admin"
+            element={<AdminPage />}
+          />
+        </Routes>
+      </main>
     </Router>
   );
 }
