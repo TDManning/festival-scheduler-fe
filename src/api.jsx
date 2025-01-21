@@ -3,7 +3,7 @@ const UNSPLASH_BASE_URL = "https://api.unsplash.com";
 const RAILS_BASE_URL = "http://localhost:3000/api/v1"; 
 
 // Unsplash: Fetch random images for show posters
-export const fetchUnsplashImages = async (query, count = 10) => {
+export const fetchUnsplashImages = async (query, count = 30) => {
   try {
     const response = await fetch(
       `${UNSPLASH_BASE_URL}/search/photos?query=${encodeURIComponent(query)}&per_page=${count}&client_id=${UNSPLASH_ACCESS_KEY}`
@@ -23,15 +23,18 @@ export const fetchUnsplashImages = async (query, count = 10) => {
 // Rails API: Fetch all shows
 export const fetchAllShows = async () => {
   try {
-    const response = await fetch(`${RAILS_BASE_URL}/shows`);
+    const response = await fetch("http://localhost:3000/api/v1/shows");
     if (!response.ok) throw new Error("Failed to fetch shows.");
-    return await response.json();
+    const data = await response.json();
+    return data.data.map((show) => ({
+      id: show.id,
+      ...show.attributes,
+    }));
   } catch (error) {
     console.error("Error fetching all shows:", error);
     throw error;
   }
 };
-
 // Rails API: Fetch a specific user's schedule
 export const fetchUserSchedule = async (userId) => {
   try {
