@@ -13,12 +13,10 @@ function UserSchedule({ user, images }) {
 
   return (
     <div className="user-schedule">
-      {/* User Information */}
       <h2 className="user-title">
         {first_name} {last_name} (@{username})
       </h2>
 
-      {/* Schedule List */}
       <ul className="schedule-list">
         {schedule.map((show) => (
           <li key={show.id} className="schedule-item">
@@ -38,7 +36,6 @@ function UserSchedule({ user, images }) {
         ))}
       </ul>
 
-      {/* Unsplash Images Section */}
       <div className="unsplash-section">
         <h3 className="unsplash-title">Unsplash Highlights</h3>
         <div className="unsplash-grid">

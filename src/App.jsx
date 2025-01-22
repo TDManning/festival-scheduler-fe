@@ -41,13 +41,24 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<HomePage unsplashImages={unsplashImages} toggleFavorite={toggleFavorite} favorites={favorites} />}
-          />
-          <Route
-            path="/favorites"
-            element={<UserPage favorites={favorites} toggleFavorite={toggleFavorite} />}
-          />
-          <Route path="/admin" element={<AdminPage />} />
+            element={
+              <HomePage
+                unsplashImages={unsplashImages}
+                toggleFavorite={toggleFavorite}
+                favorites={favorites}
+              />
+            }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <UserPage
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                />
+              }
+              />
+            <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
     </Router>
