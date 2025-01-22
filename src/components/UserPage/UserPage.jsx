@@ -13,7 +13,7 @@ function UserPage({ unsplashImages }) {
   useEffect(() => {
     const loadSchedule = async () => {
       try {
-        const data = await fetchUserSchedule(userId, ""); 
+        const data = await fetchUserSchedule(userId); 
         setSchedule(data.data || []); 
         setLoading(false);
       } catch (err) {
@@ -29,20 +29,22 @@ function UserPage({ unsplashImages }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-
-  const showsWithImages = schedule.map((show, index) => ({
-    ...show,
-    image: unsplashImages[index % unsplashImages.length], 
-  }));
-
   return (
     <div className="user-page">
       <h1 className="user-title">{`User ${userId}'s Schedule`}</h1>
-      {showsWithImages.length > 0 ? (
+      {schedule.length > 0 ? (
         <div className="schedule-grid">
-          {showsWithImages.map((show) => (
-            <ShowCard key={show.id} show={show.attributes} poster={show.image} />
-          ))}
+          {schedule.map((show, index) => {
+            const poster = unsplashImages[index % unsplashImages.length]; 
+            return (
+              <ShowCard 
+                key={show.id} 
+                show={show.attributes} 
+                poster={poster}
+                userId={userId}   
+              />
+            );
+          })}
         </div>
       ) : (
         <p>No shows found for this user.</p>

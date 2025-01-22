@@ -1,36 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchUserSchedule } from "../../api/api"; 
-import "./NavBar.css";
 import { Link } from "react-router-dom";
+import "./NavBar.css";
 
 function NavBar() {
-  const [userId, setUserId] = useState(""); 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [userId, setUserId] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (userId.trim()) {
-      setError(""); 
-      setLoading(true); 
-
-      try {
-
-        const data = await fetchUserSchedule(userId.trim(), ""); 
-        
-        if (data && data.data) {
-          navigate(`/user/${userId.trim()}`); 
-        } else {
-          setError("User schedule not found.");
-        }
-      } catch (err) {
-        console.error("Error fetching user schedule:", err);
-        setError("Error fetching user information.");
-      } finally {
-        setLoading(false); 
-      }
+      navigate(`/user/${userId.trim()}`);
+    } else {
+      alert("Please enter a user ID.");
     }
   };
 
@@ -40,16 +22,15 @@ function NavBar() {
         <Link to="/">Home</Link>
         <Link to="/admin">Admin</Link>
       </div>
-      <form className="navbar-form" onSubmit={handleSubmit}>
+      <form className="navbar-search" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter User ID"
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
         />
-        <button type="submit" disabled={loading}>View Schedule</button>
+        <button type="submit">Search</button>
       </form>
-      {error && <p className="error-message">{error}</p>}
     </nav>
   );
 }
