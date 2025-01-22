@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchAllShows } from "../../api/api"; 
+import { fetchAllShows } from "../../api/api";
 import ShowCard from "../ShowCard/ShowCard";
 import "./HomePage.css";
 
@@ -23,7 +23,7 @@ function HomePage({ unsplashImages }) {
       try {
         const fetchedShows = await fetchAllShows();
         setShows(fetchedShows);
-        setFilteredShows(fetchedShows);  
+        setFilteredShows(fetchedShows);
         setLoading(false);
       } catch (error) {
         console.error("Error loading shows:", error);
@@ -67,7 +67,7 @@ function HomePage({ unsplashImages }) {
       <div className="show-grid">
         {filteredShows.length > 0 ? (
           filteredShows.map((show, index) => {
-            const poster = unsplashImages[index % unsplashImages.length]; 
+            const poster = unsplashImages[index % unsplashImages.length];
             return (
               <ShowCard key={show.id} show={show} poster={poster} />
             );
