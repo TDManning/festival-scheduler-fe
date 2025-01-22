@@ -8,7 +8,7 @@ const timeSlotMap = {
   5: "6:00 PM - 7:00 PM",
 };
 
-function ShowCard({ show, poster, toggleFavorite, isFavorited }) {
+function ShowCard({ show, poster }) {
   const imageUrl = poster?.url || "https://via.placeholder.com/200";
   const imageAlt = poster?.alt || "Show Poster";
 
@@ -18,12 +18,6 @@ function ShowCard({ show, poster, toggleFavorite, isFavorited }) {
       <h2 className="show-artist">{show.artist}</h2>
       <p>{show.location}</p>
       <p>Time Slot: {timeSlotMap[show.time_slot] || "Unknown Time Slot"}</p>
-      <button
-        className={`favorite-button ${isFavorited ? "favorited" : ""}`}
-        onClick={() => toggleFavorite(show)}
-      >
-        {isFavorited ? "Unfavorite" : "Favorite"}
-      </button>
     </div>
   );
 }

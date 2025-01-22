@@ -7,7 +7,6 @@ import AdminPage from "./components/AdminPage/AdminPage";
 import { fetchUnsplashImages } from "./api/api";
 
 function App() {
-  const [favorites, setFavorites] = useState([]);
   const [unsplashImages, setUnsplashImages] = useState([]);
   const [currentUser, setCurrentUser] = useState(""); 
 
@@ -24,15 +23,6 @@ function App() {
     loadUnsplashImages();
   }, []);
 
-  const toggleFavorite = (show) => {
-    const isFavorited = favorites.some((fav) => fav.id === show.id);
-    if (isFavorited) {
-      setFavorites(favorites.filter((fav) => fav.id !== show.id));
-    } else {
-      setFavorites([...favorites, show]);
-    }
-  };
-
   return (
     <Router>
       <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -40,32 +30,15 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <HomePage
-                unsplashImages={unsplashImages}
-                toggleFavorite={toggleFavorite}
-                favorites={favorites}
-              />
-            }
+            element={<HomePage unsplashImages={unsplashImages} />}
           />
           <Route
             path="/user/:userId"
-            element={
-              <UserPage
-                unsplashImages={unsplashImages} 
-                currentUser={currentUser}
-                favorites={favorites}
-                toggleFavorite={toggleFavorite}
-              />
-            }
+            element={<UserPage unsplashImages={unsplashImages} currentUser={currentUser} />}
           />
           <Route
             path="/admin"
-            element={
-              <AdminPage
-                unsplashImages={unsplashImages} 
-              />
-            }
+            element={<AdminPage unsplashImages={unsplashImages} />}
           />
         </Routes>
       </main>

@@ -36,13 +36,18 @@ function AdminPage({ unsplashImages }) {
       <h1>Admin: Manage User Schedules</h1>
       <div className="schedules-section">
         {schedules.map((user) => (
-          <UserSchedule
-            key={user.id}
-            user={user}
-            allShows={shows} 
-            unsplashImages={unsplashImages} 
-            updateSchedules={setSchedules}
-          />
+          <div key={user.id} className="user-container">
+            <div className="user-details">
+              <h3>{user.attributes.username}</h3>
+              <p>User ID: {user.id}</p> 
+            </div>
+            <UserSchedule
+              user={user}
+              allShows={shows}
+              unsplashImages={unsplashImages}
+              updateSchedules={setSchedules}
+            />
+          </div>
         ))}
       </div>
     </div>
@@ -50,4 +55,3 @@ function AdminPage({ unsplashImages }) {
 }
 
 export default AdminPage;
-
