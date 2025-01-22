@@ -1,23 +1,38 @@
-import './App.css';
-import "./NavBar.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import NavBar from "./NavBar";
-import HomePage from "./HomePage";
-import UserPage from "./UserPage";
-import AdminPage from "./AdminPage";
+import { useState, useEffect } from "react";
+import NavBar from "./components/NavBar/NavBar";
+import HomePage from "./components/HomePage/HomePage";
+import UserPage from "./components/UserPage/UserPage";
+import AdminPage from "./components/AdminPage/AdminPage";
+import { fetchUnsplashImages } from "./api/api";
 
 function App() {
   const [favorites, setFavorites] = useState([]);
+  const [unsplashImages, setUnsplashImages] = useState([]);
+
+
+  useEffect(() => {
+    const loadUnsplashImages = async () => {
+      try {
+        const images = await fetchUnsplashImages("concert", 30); 
+        setUnsplashImages(images);
+      } catch (error) {
+        console.error("Error fetching Unsplash images:", error);
+      }
+    };
+
+    loadUnsplashImages();
+  }, []);
 
   const toggleFavorite = (show) => {
-    const isFavorite = favorites.some((fav) => fav.id === show.id);
-    if (isFavorite) {
+    const isFavorited = favorites.some((fav) => fav.id === show.id);
+    if (isFavorited) {
       setFavorites(favorites.filter((fav) => fav.id !== show.id));
     } else {
       setFavorites([...favorites, show]);
     }
   };
+
 
   return (
     <Router>
@@ -26,13 +41,24 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<HomePage favorites={favorites} toggleFavorite={toggleFavorite} />}
-          />
-          <Route
-            path="/favorites"
-            element={<UserPage favorites={favorites} toggleFavorite={toggleFavorite} />}
-          />
-          <Route path="/admin" element={<AdminPage />} />
+            element={
+              <HomePage
+                unsplashImages={unsplashImages}
+                toggleFavorite={toggleFavorite}
+                favorites={favorites}
+              />
+            }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <UserPage
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                />
+              }
+              />
+            <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
     </Router>

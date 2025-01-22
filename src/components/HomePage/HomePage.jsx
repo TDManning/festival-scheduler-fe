@@ -1,25 +1,20 @@
-import "./HomePage.css";
 import { useState, useEffect } from "react";
-import { fetchAllShows, fetchUnsplashImages } from "./api";
-import ShowCard from "./ShowCard";
+import { fetchAllShows } from "../../api/api";
+import ShowCard from "../ShowCard/ShowCard";
+import "./HomePage.css";
 
-function HomePage() {
+function HomePage({ unsplashImages, toggleFavorite, favorites }) {
   const [shows, setShows] = useState([]);
-  const [posters, setPosters] = useState([]);
 
   useEffect(() => {
     const loadShows = async () => {
       try {
         const fetchedShows = await fetchAllShows();
-        const fetchedPosters = await fetchUnsplashImages("concert");
-
         setShows(fetchedShows);
-        setPosters(fetchedPosters);
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error loading shows:", error);
       }
     };
-
     loadShows();
   }, []);
 
@@ -29,12 +24,15 @@ function HomePage() {
       <div className="show-grid">
         {shows.length > 0 ? (
           shows.map((show, index) => {
-            const poster = posters[index];
+            const poster = unsplashImages[index];
+            const isFavorited = favorites.some((fav) => fav.id === show.id);
             return (
               <ShowCard
                 key={show.id}
-                show={show} 
-                poster={poster} 
+                show={show}
+                poster={poster}
+                toggleFavorite={toggleFavorite}
+                isFavorited={isFavorited}
               />
             );
           })
