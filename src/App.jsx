@@ -52,13 +52,21 @@ function App() {
             path="/user/:userId"
             element={
               <UserPage
+                unsplashImages={unsplashImages} 
                 currentUser={currentUser}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
               />
             }
           />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminPage
+                unsplashImages={unsplashImages} 
+              />
+            }
+          />
         </Routes>
       </main>
     </Router>

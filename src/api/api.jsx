@@ -37,22 +37,9 @@ export const fetchAllShows = async () => {
 };
 
 // Rails API: Fetch a specific user's schedule
-// export const fetchUserSchedule = async (userId, username = null) => {
-//   try {
-//     const query = username ? `?username=${encodeURIComponent(username)}` : "";
-//     const response = await fetch(`${RAILS_BASE_URL}/users/${userId}/shows${query}`);
-//     if (!response.ok) throw new Error("Failed to fetch user schedule.");
-//     return await response.json();
-//   } catch (error) {
-//     console.error(`Error fetching schedule for user ID ${userId}:`, error);
-//     throw error;
-//   }
-// };
-
-export const fetchUserSchedule = async (userId, username) => {
+export const fetchUserSchedule = async (userId) => {
   try {
-    const query = username ? `?username=${encodeURIComponent(username)}` : "";
-    const response = await fetch(`http://localhost:3000/api/v1/users/${userId}/shows${query}`);
+    const response = await fetch(`http://localhost:3000/api/v1/users/${userId}/shows`);
     if (!response.ok) throw new Error("Failed to fetch user schedule.");
     const data = await response.json();
     return data;
@@ -105,3 +92,4 @@ export const fetchAllUserSchedules = async () => {
     throw error;
   }
 };
+

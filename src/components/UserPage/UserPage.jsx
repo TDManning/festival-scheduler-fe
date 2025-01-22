@@ -1,26 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ShowCard from "../ShowCard/ShowCard";
 import { fetchUserSchedule } from "../../api/api";
 import "./UserPage.css";
 
-function UserPage() {
+function UserPage({ unsplashImages }) {
   const { userId } = useParams(); 
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
   const [schedule, setSchedule] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
-  const query = new URLSearchParams(location.search);
-  const username = query.get("username");
-
   useEffect(() => {
     const loadSchedule = async () => {
       try {
-    
-        const data = await fetchUserSchedule(userId, username);
+        const data = await fetchUserSchedule(userId, ""); 
         setSchedule(data.data || []); 
         setLoading(false);
       } catch (err) {
@@ -31,28 +24,29 @@ function UserPage() {
     };
 
     loadSchedule();
-  }, [userId, username]);
+  }, [userId]);  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+
+  const showsWithImages = schedule.map((show, index) => ({
+    ...show,
+    image: unsplashImages[index % unsplashImages.length], 
+  }));
+
   return (
     <div className="user-page">
-      <h1 className="user-title">
-        {username ? `${username}'s Schedule` : "User Schedule"}
-      </h1>
-      {schedule.length > 0 ? (
+      <h1 className="user-title">{`User ${userId}'s Schedule`}</h1>
+      {showsWithImages.length > 0 ? (
         <div className="schedule-grid">
-          {schedule.map((show) => (
-            <ShowCard key={show.id} show={show.attributes} />
+          {showsWithImages.map((show) => (
+            <ShowCard key={show.id} show={show.attributes} poster={show.image} />
           ))}
         </div>
       ) : (
         <p>No shows found for this user.</p>
       )}
-      <button className="back-button" onClick={() => navigate("/")}>
-        Back to Home
-      </button>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import UserSchedule from "../UserSchedule/UserSchedule";
-import { fetchAllUserSchedules, fetchAllShows, fetchUnsplashImages } from "../../api/api";
+import { fetchAllUserSchedules, fetchAllShows } from "../../api/api";
 import "./AdminPage.css";
 
-function AdminPage() {
+function AdminPage({ unsplashImages }) {
   const [schedules, setSchedules] = useState([]);
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +40,7 @@ function AdminPage() {
             key={user.id}
             user={user}
             allShows={shows} 
+            unsplashImages={unsplashImages} 
             updateSchedules={setSchedules}
           />
         ))}
@@ -49,3 +50,4 @@ function AdminPage() {
 }
 
 export default AdminPage;
+

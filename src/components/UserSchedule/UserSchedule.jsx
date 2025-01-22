@@ -9,10 +9,9 @@ const timeSlotMap = {
   5: "6:00 PM - 7:00 PM",
 };
 
-function UserSchedule({ user, allShows, updateSchedules }) {
+function UserSchedule({ user, allShows, unsplashImages, updateSchedules }) {
   const handleRemoveShow = async (showId) => {
     try {
-      console.log(`Removing show with ID: ${showId}`);
       await removeUserShow(user.id, showId);
 
       updateSchedules((prevSchedules) => {
@@ -33,7 +32,6 @@ function UserSchedule({ user, allShows, updateSchedules }) {
   };
 
   const handleAddShow = async (showId) => {
-    console.log("Adding show with ID:", showId);
     try {
       await addUserShow(user.id, showId);
 
@@ -62,16 +60,14 @@ function UserSchedule({ user, allShows, updateSchedules }) {
 
   return (
     <div className="user-schedule">
-      <h2>
-        {user.attributes.first_name} {user.attributes.last_name} (@{user.attributes.username})
-      </h2>
+      <h2>{user.attributes.first_name} {user.attributes.last_name} (@{user.attributes.username})</h2>
 
       <ul>
-        {(user.attributes.schedule || []).map((show) => (
+        {(user.attributes.schedule || []).map((show, index) => (
           <li key={show.id}>
             <img
-              src={show.image_url || "https://via.placeholder.com/200"}
-              alt={show.artist || "No Artist"}
+              src={unsplashImages[index % unsplashImages.length]?.url || "https://via.placeholder.com/200"}
+              alt={show.artist || "Show Poster"}
             />
             <div>
               <p>{show.artist} at {show.location}</p>

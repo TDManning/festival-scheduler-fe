@@ -1,30 +1,35 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchUserSchedule } from "../../api/api"; 
 import "./NavBar.css";
 import { Link } from "react-router-dom";
-import { fetchUserSchedule } from "../../api/api";
 
 function NavBar() {
-  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState(""); 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.trim()) {
+    if (userId.trim()) {
+      setError(""); 
+      setLoading(true); 
+
       try {
-        const placeholderUserId = 1; 
-        const data = await fetchUserSchedule(placeholderUserId, username.trim());
-     
+
+        const data = await fetchUserSchedule(userId.trim(), ""); 
+        
         if (data && data.data) {
-          const userId = placeholderUserId; 
-          navigate(`/user/${userId}?username=${encodeURIComponent(username.trim())}`);
+          navigate(`/user/${userId.trim()}`); 
         } else {
-          setError("User not found.");
+          setError("User schedule not found.");
         }
       } catch (err) {
         console.error("Error fetching user schedule:", err);
         setError("Error fetching user information.");
+      } finally {
+        setLoading(false); 
       }
     }
   };
@@ -38,11 +43,11 @@ function NavBar() {
       <form className="navbar-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter User ID"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
         />
-        <button type="submit">View Schedule</button>
+        <button type="submit" disabled={loading}>View Schedule</button>
       </form>
       {error && <p className="error-message">{error}</p>}
     </nav>
