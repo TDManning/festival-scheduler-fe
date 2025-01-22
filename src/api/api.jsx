@@ -82,7 +82,8 @@ export const fetchAllUserSchedules = async () => {
   try {
     const response = await fetch(`${RAILS_BASE_URL}/users/shows`);
     if (!response.ok) throw new Error("Failed to fetch all user schedules.");
-    return await response.json();
+    const data = await response.json();
+    console.log("Raw API Response:", data); 
   } catch (error) {
     console.error("Error fetching all user schedules:", error);
     throw error;

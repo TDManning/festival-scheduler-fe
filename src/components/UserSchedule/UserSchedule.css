@@ -1,0 +1,59 @@
+.user-schedule {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.user-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.schedule-list {
+  list-style: none;
+  padding: 0;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.schedule-image {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.schedule-details p {
+  margin: 2px 0;
+}
+
+.unsplash-section {
+  margin-top: 20px;
+}
+
+.unsplash-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.unsplash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.unsplash-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}

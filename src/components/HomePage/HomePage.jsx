@@ -1,7 +1,7 @@
 import "./HomePage.css";
 import { useState, useEffect } from "react";
-import { fetchAllShows, fetchUnsplashImages } from "./api";
-import ShowCard from "./ShowCard";
+import { fetchAllShows, fetchUnsplashImages } from "../api";
+import ShowCard from "../ShowCard/ShowCard";
 
 function HomePage() {
   const [shows, setShows] = useState([]);
