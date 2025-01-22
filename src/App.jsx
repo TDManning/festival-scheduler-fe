@@ -9,7 +9,7 @@ import { fetchUnsplashImages } from "./api/api";
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [unsplashImages, setUnsplashImages] = useState([]);
-
+  const [currentUser, setCurrentUser] = useState(""); 
 
   useEffect(() => {
     const loadUnsplashImages = async () => {
@@ -33,10 +33,9 @@ function App() {
     }
   };
 
-
   return (
     <Router>
-      <NavBar />
+      <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <main>
         <Routes>
           <Route
@@ -48,17 +47,26 @@ function App() {
                 favorites={favorites}
               />
             }
-            />
-            <Route
-              path="/favorites"
-              element={
-                <UserPage
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                />
-              }
+          />
+          <Route
+            path="/user/:userId"
+            element={
+              <UserPage
+                unsplashImages={unsplashImages} 
+                currentUser={currentUser}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
               />
-            <Route path="/admin" element={<AdminPage />} />
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminPage
+                unsplashImages={unsplashImages} 
+              />
+            }
+          />
         </Routes>
       </main>
     </Router>

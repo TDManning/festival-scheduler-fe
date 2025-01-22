@@ -1,4 +1,5 @@
 import "./UserSchedule.css";
+import { removeUserShow, addUserShow } from "../../api/api";
 
 const timeSlotMap = {
   1: "12:00 PM - 1:00 PM",
@@ -8,41 +9,87 @@ const timeSlotMap = {
   5: "6:00 PM - 7:00 PM",
 };
 
-function UserSchedule({ user, allShows, onRemoveShow, onAddShow }) {
-  const { first_name, last_name, username, schedule } = user.attributes;
+function UserSchedule({ user, allShows, unsplashImages, updateSchedules }) {
+  const handleRemoveShow = async (showId) => {
+    try {
+      await removeUserShow(user.id, showId);
+
+      updateSchedules((prevSchedules) => {
+        if (!prevSchedules) return [];
+        return prevSchedules.map((u) => {
+          if (u.id === user.id) {
+            const updatedSchedule = u.attributes.schedule.filter(
+              (show) => show.id !== showId
+            );
+            return { ...u, attributes: { ...u.attributes, schedule: updatedSchedule } };
+          }
+          return u;
+        });
+      });
+    } catch (err) {
+      console.error("Error removing show:", err);
+    }
+  };
+
+  const handleAddShow = async (showId) => {
+    try {
+      await addUserShow(user.id, showId);
+
+      const showToAdd = allShows.find((show) => String(show.id) === String(showId));
+      if (!showToAdd) {
+        console.error("Show not found:", showId);
+        return;
+      }
+
+      updateSchedules((prevSchedules) => {
+        if (!prevSchedules) return [];
+        return prevSchedules.map((u) => {
+          if (u.id === user.id) {
+            const updatedSchedule = [...(u.attributes.schedule || []), showToAdd];
+            return { ...u, attributes: { ...u.attributes, schedule: updatedSchedule } };
+          }
+          return u;
+        });
+      });
+
+      console.log("Show added successfully:", showToAdd);
+    } catch (err) {
+      console.error("Error adding show:", err);
+    }
+  };
 
   return (
     <div className="user-schedule">
-      <h2 className="user-title">
-        {first_name} {last_name} (@{username})
-      </h2>
+      <h2>{user.attributes.first_name} {user.attributes.last_name} (@{user.attributes.username})</h2>
 
-      <ul className="schedule-list">
-        {schedule.map((show) => (
-          <li key={show.id} className="schedule-item">
+      <ul>
+        {(user.attributes.schedule || []).map((show, index) => (
+          <li key={show.id}>
             <img
-              src={show.image_url}
-              alt={show.artist}
-              className="schedule-image"
+              src={unsplashImages[index % unsplashImages.length]?.url || "https://via.placeholder.com/200"}
+              alt={show.artist || "Show Poster"}
             />
-            <div className="schedule-details">
-              <p>
-                <strong>{show.artist}</strong> at {show.location}
-              </p>
-              <p>Time Slot: {timeSlotMap[show.time_slot] || "Unknown"}</p>
-              <p>Favorited: {show.favorited ? "Yes" : "No"}</p>
-              <button onClick={() => onRemoveShow(show.id)}>Remove Show</button>
+            <div>
+              <p>{show.artist} at {show.location}</p>
+              <p>Time: {timeSlotMap[show.time_slot] || "Unknown"}</p>
+              <button onClick={() => handleRemoveShow(show.id)}>Remove Show</button>
             </div>
           </li>
         ))}
       </ul>
 
-      <div className="add-show-section">
+      <div>
         <h3>Add a Show</h3>
-        <select onChange={(e) => onAddShow(e.target.value)} defaultValue="">
-          <option value="" disabled>
-            Select a show
-          </option>
+        <select
+          onChange={(e) => {
+            const selectedShowId = e.target.value;
+            if (selectedShowId) {
+              handleAddShow(selectedShowId);
+            }
+          }}
+          defaultValue=""
+        >
+          <option value="" disabled>Select a show</option>
           {allShows.map((show) => (
             <option key={show.id} value={show.id}>
               {show.artist} at {show.location}

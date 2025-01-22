@@ -1,23 +1,51 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ShowCard from "../ShowCard/ShowCard";
+import { fetchUserSchedule } from "../../api/api";
 import "./UserPage.css";
 
-function UserPage({ favorites, toggleFavorite }) {
+function UserPage({ unsplashImages }) {
+  const { userId } = useParams(); 
+  const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadSchedule = async () => {
+      try {
+        const data = await fetchUserSchedule(userId, ""); 
+        setSchedule(data.data || []); 
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching schedule:", err);
+        setError("Could not load the schedule for the user.");
+        setLoading(false);
+      }
+    };
+
+    loadSchedule();
+  }, [userId]);  
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+
+  const showsWithImages = schedule.map((show, index) => ({
+    ...show,
+    image: unsplashImages[index % unsplashImages.length], 
+  }));
+
   return (
     <div className="user-page">
-      <h1 className="user-title">My Favorite Shows</h1>
-      {favorites.length > 0 ? (
-        <div className="favorites-grid">
-          {favorites.map((show) => (
-            <ShowCard
-              key={show.id}
-              show={show}
-              toggleFavorite={toggleFavorite}
-              isFavorited={true}
-            />
+      <h1 className="user-title">{`User ${userId}'s Schedule`}</h1>
+      {showsWithImages.length > 0 ? (
+        <div className="schedule-grid">
+          {showsWithImages.map((show) => (
+            <ShowCard key={show.id} show={show.attributes} poster={show.image} />
           ))}
         </div>
       ) : (
-        <p>You have not favorited any shows yet.</p>
+        <p>No shows found for this user.</p>
       )}
     </div>
   );
