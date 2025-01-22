@@ -8,7 +8,7 @@ const timeSlotMap = {
   5: "6:00 PM - 7:00 PM",
 };
 
-function UserSchedule({ user, images }) {
+function UserSchedule({ user }) {
   const { first_name, last_name, username, schedule } = user.attributes;
 
   return (
@@ -16,7 +16,6 @@ function UserSchedule({ user, images }) {
       <h2 className="user-title">
         {first_name} {last_name} (@{username})
       </h2>
-
       <ul className="schedule-list">
         {schedule.map((show) => (
           <li key={show.id} className="schedule-item">
@@ -35,20 +34,6 @@ function UserSchedule({ user, images }) {
           </li>
         ))}
       </ul>
-
-      <div className="unsplash-section">
-        <h3 className="unsplash-title">Unsplash Highlights</h3>
-        <div className="unsplash-grid">
-          {images.map((image) => (
-            <img
-              key={image.id}
-              src={image.url}
-              alt={image.alt}
-              className="unsplash-image"
-            />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
