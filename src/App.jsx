@@ -25,7 +25,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <NavBar/>
       <main>
         <Routes>
           <Route
@@ -34,7 +34,7 @@ function App() {
           />
           <Route
             path="/user/:userId"
-            element={<UserPage unsplashImages={unsplashImages} currentUser={currentUser} />}
+            element={<UserPage unsplashImages={unsplashImages} />}
           />
           <Route
             path="/admin"
