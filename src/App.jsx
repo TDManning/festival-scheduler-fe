@@ -14,8 +14,8 @@ function App() {
   useEffect(() => {
     const loadUnsplashImages = async () => {
       try {
-        const images = await fetchUnsplashImages("concert", 30);
-        setUnsplashImages(fetchedImages);
+        const images = await fetchUnsplashImages("concert", 30); 
+        setUnsplashImages(images);
       } catch (error) {
         console.error("Error fetching Unsplash images:", error);
       }

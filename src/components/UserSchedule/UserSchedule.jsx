@@ -8,7 +8,7 @@ const timeSlotMap = {
   5: "6:00 PM - 7:00 PM",
 };
 
-function UserSchedule({ user }) {
+function UserSchedule({ user, allShows, onRemoveShow, onAddShow }) {
   const { first_name, last_name, username, schedule } = user.attributes;
 
   return (
@@ -16,6 +16,7 @@ function UserSchedule({ user }) {
       <h2 className="user-title">
         {first_name} {last_name} (@{username})
       </h2>
+
       <ul className="schedule-list">
         {schedule.map((show) => (
           <li key={show.id} className="schedule-item">
@@ -30,10 +31,25 @@ function UserSchedule({ user }) {
               </p>
               <p>Time Slot: {timeSlotMap[show.time_slot] || "Unknown"}</p>
               <p>Favorited: {show.favorited ? "Yes" : "No"}</p>
+              <button onClick={() => onRemoveShow(show.id)}>Remove Show</button>
             </div>
           </li>
         ))}
       </ul>
+
+      <div className="add-show-section">
+        <h3>Add a Show</h3>
+        <select onChange={(e) => onAddShow(e.target.value)} defaultValue="">
+          <option value="" disabled>
+            Select a show
+          </option>
+          {allShows.map((show) => (
+            <option key={show.id} value={show.id}>
+              {show.artist} at {show.location}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
