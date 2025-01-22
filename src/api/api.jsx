@@ -35,17 +35,33 @@ export const fetchAllShows = async () => {
     throw error;
   }
 };
+
 // Rails API: Fetch a specific user's schedule
-export const fetchUserSchedule = async (userId) => {
+// export const fetchUserSchedule = async (userId, username = null) => {
+//   try {
+//     const query = username ? `?username=${encodeURIComponent(username)}` : "";
+//     const response = await fetch(`${RAILS_BASE_URL}/users/${userId}/shows${query}`);
+//     if (!response.ok) throw new Error("Failed to fetch user schedule.");
+//     return await response.json();
+//   } catch (error) {
+//     console.error(`Error fetching schedule for user ID ${userId}:`, error);
+//     throw error;
+//   }
+// };
+
+export const fetchUserSchedule = async (userId, username) => {
   try {
-    const response = await fetch(`${RAILS_BASE_URL}/users/${userId}/shows`);
+    const query = username ? `?username=${encodeURIComponent(username)}` : "";
+    const response = await fetch(`http://localhost:3000/api/v1/users/${userId}/shows${query}`);
     if (!response.ok) throw new Error("Failed to fetch user schedule.");
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error(`Error fetching schedule for user ID ${userId}:`, error);
+    console.error("Error fetching user schedule:", error);
     throw error;
   }
 };
+
 
 // Rails API: Add a show to a user's schedule
 export const addUserShow = async (userId, showId) => {
