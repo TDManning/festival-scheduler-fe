@@ -61,7 +61,6 @@
   background-color: #555;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;

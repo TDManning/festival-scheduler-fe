@@ -1,59 +1,90 @@
 .user-schedule {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: #fff;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 2rem;
 }
 
-.user-title {
-  font-size: 20px;
-  margin-bottom: 10px;
+.user-schedule h2 {
+  font-size: 1.8rem;
+  color: #8b1010;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.user-schedule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-schedule ul li {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-schedule ul li:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-schedule ul li img {
+  width: 100%; 
+  max-width: 300px;
+  height: 220px; 
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.stage-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%; 
+  max-width: 300px; 
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
   color: #222;
 }
 
-.schedule-list {
-  list-style: none;
-  padding: 0;
-}
-
-.schedule-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.schedule-image {
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
+.user-schedule ul li button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #8b1010;
+  border: none;
   border-radius: 4px;
-  object-fit: cover;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.schedule-details p {
-  margin: 2px 0;
+.user-schedule ul li button:hover {
+  background-color: #b31212;
 }
 
-.unsplash-section {
-  margin-top: 20px;
-}
 
-.unsplash-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #555;
-}
-
-.unsplash-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-}
-
-.unsplash-image {
+.user-schedule select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   width: 100%;
-  height: auto;
-  border-radius: 4px;
-  object-fit: cover;
+  max-width: 300px;
+  margin-top: 1rem;
 }
