@@ -1,75 +1,177 @@
-# Getting Started with Create React App
+# 🎵 Festival Scheduler - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A dynamic, whimsical React application that allows music festival administrators to explore festival shows and manage user schedules.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Summary
 
-### `npm start`
+The **Festival Scheduler** is designed to provide an interactive experience for festival administrators to:
+- Explore the festival lineup.
+- Filter shows by time slot.
+- Create and manage personalized schedules, including adding and deleting specific shows.
+- View a specific user's festival schedule.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📸 Walkthrough
 
-### `npm test`
+### Homepage
+![Homepage Screenshot](homepage.png)  
+Explore the festival lineup with a whimsical, responsive layout.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### User Schedule
+![User Schedule Screenshot](userschedule.png)  
+Users can view and manage their personal schedules with intuitive options to add or remove shows.
 
-### `npm run build`
+### Admin Page
+![Admin Page Screenshot](adminpage.png)  
+Admins can oversee all user schedules and manage show assignments.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Setup Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Follow these steps to get the front-end up and running:
 
-### `npm run eject`
+### Prerequisites
+- Node.js (v14+)
+- npm or yarn
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/festival-scheduler-frontend.git
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd festival-scheduler-frontend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+   Or, if you use yarn:
+   ```bash
+   yarn install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Starting the Application
+1. Run the app:
+   ```bash
+   npm start
+   ```
+   Or, using yarn:
+   ```bash
+   yarn start
+   ```
+2. Open your browser and navigate to `http://localhost:3001`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🌐 API Endpoints Used
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This frontend connects to the **Rails API backend**. Below are the endpoints utilized:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **Unsplash API**
+1. **Fetch random images**  
+   Endpoint: `https://api.unsplash.com/search/photos`  
+   Method: `GET`  
+   Parameters:
+   - `query`: Search term for images (e.g., "concert").
+   - `per_page`: Number of images to fetch.
+   - `client_id`: Your Unsplash API access key.
 
-### Code Splitting
+### **Rails API**
+1. **Fetch all shows**  
+   Endpoint: `GET /api/v1/shows`  
+   Returns a list of all festival shows.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **Fetch a user's schedule**  
+   Endpoint: `GET /api/v1/users/:user_id/shows`  
+   Retrieves all shows associated with a specific user.
 
-### Analyzing the Bundle Size
+3. **Add a show to a user's schedule**  
+   Endpoint: `POST /api/v1/users/:user_id/shows`  
+   Request body:
+   ```json
+   {
+     "show_id": 1
+   }
+   ```
+   Adds the specified show to the user's schedule.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4. **Remove a show from a user's schedule**  
+   Endpoint: `DELETE /api/v1/users/:user_id/shows/:show_id`  
+   Removes the specified show from the user's schedule.
 
-### Making a Progressive Web App
+5. **Fetch all user schedules (Admin)**  
+   Endpoint: `GET /api/v1/users/shows`  
+   Returns all users and their associated schedules.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📝 Instructions for Use
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. **Explore Shows**:
+   - Navigate to the homepage to view the lineup.
+   - Filter shows by time slots using the dropdown menu.
 
-### Deployment
+2. **Manage Schedules**:
+   - Visit `/user/:user_id` to view and manage your schedule.
+   - Add or remove shows dynamically.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+3. **Administer User Schedules**:
+   - Navigate to `/admin` to view all user schedules.
+   - Admins can manage individual user schedules directly.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🛠 Features and Design Decisions
 
+1. **Dynamic Filtering**:
+   - Users can filter shows by time slots, providing a tailored experience.
+2. **Responsive Design**:
+   - Built with a grid-based layout for consistency across devices.
+3. **Whimsical Theme**:
+   - Used playful fonts and vibrant colors to match the festival theme.
+4. **Error Handling**:
+   - Ensures smooth navigation even during API failures.
+5. **Clean Codebase**:
+   - Modularized components for maintainability and scalability.
 
-npm install
+---
 
-running on server http://localhost:3001/
+## 🔧 Tech Stack
+
+- **Frontend**:
+  - React (Functional Components, Hooks)
+  - CSS (Responsive Design)
+
+- **Backend**:
+  - Rails API (Details in backend README)
+
+- **Third-Party Integration**:
+  - Unsplash API for dynamic images
+
+---
+
+## 💡 Future Improvements
+
+- **Search Functionality**:
+  - Add the ability to search for shows by artist or location.
+- **Sorting Options**:
+  - Allow sorting by popularity or other criteria.
+- **Real-Time Updates**:
+  - Implement WebSockets to reflect live schedule changes.
+
+---
+
+## 🔍 Additional Resources
+
+- [Unsplash API Documentation](https://unsplash.com/documentation)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+
+---
+```
