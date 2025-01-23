@@ -49,35 +49,35 @@ function HomePage({ unsplashImages }) {
   if (loading) return <p>Loading shows...</p>;
   if (error) return <p>{error}</p>;
 
-  return (
-    <div className="home-container">
-      <h1 className="home-title">Shows</h1>
-      <div className="time-slot-filter">
-        <label htmlFor="timeSlot">Filter by Time Slot:</label>
-        <select id="timeSlot" value={selectedTimeSlot} onChange={handleTimeSlotChange}>
-          <option value="">Select Time Slot</option>
-          {Object.keys(timeSlotMap).map((slot) => (
-            <option key={slot} value={slot}>
-              {timeSlotMap[slot]}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="show-grid">
-        {filteredShows.length > 0 ? (
-          filteredShows.map((show, index) => {
-            const poster = unsplashImages[index % unsplashImages.length];
-            return (
-              <ShowCard key={show.id} show={show} poster={poster} />
-            );
-          })
-        ) : (
-          <p>No shows available for the selected time slot</p>
-        )}
-      </div>
+return (
+  <div className="home-container">
+    <header className="site-header">
+      <h1>Festival Scheduler</h1>
+    </header>
+    <h2 className="home-title">Explore the Festival Lineup</h2>
+    <div className="time-slot-filter">
+      <label htmlFor="timeSlot">Filter by Time Slot:</label>
+      <select id="timeSlot" value={selectedTimeSlot} onChange={handleTimeSlotChange}>
+        <option value="">Select Time Slot</option>
+        {Object.keys(timeSlotMap).map((slot) => (
+          <option key={slot} value={slot}>
+            {timeSlotMap[slot]}
+          </option>
+        ))}
+      </select>
     </div>
-  );
+    <div className="show-grid">
+      {filteredShows.length > 0 ? (
+        filteredShows.map((show, index) => {
+          const poster = unsplashImages[index % unsplashImages.length];
+          return <ShowCard key={show.id} show={show} poster={poster} />;
+        })
+      ) : (
+        <p>No shows available for the selected time slot</p>
+      )}
+    </div>
+  </div>
+);
 }
 
 export default HomePage;

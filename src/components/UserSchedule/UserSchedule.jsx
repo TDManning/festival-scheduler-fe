@@ -60,23 +60,29 @@ function UserSchedule({ user, allShows, unsplashImages, updateSchedules }) {
 
   return (
     <div className="user-schedule">
-      <h2>{user.attributes.first_name} {user.attributes.last_name} (@{user.attributes.username})</h2>
+  <h2>
+    {user.attributes.first_name} {user.attributes.last_name} (@
+    {user.attributes.username})
+  </h2>
 
-      <ul>
-        {(user.attributes.schedule || []).map((show, index) => (
-          <li key={show.id}>
-            <img
-              src={unsplashImages[index % unsplashImages.length]?.url || "https://via.placeholder.com/200"}
-              alt={show.artist || "Show Poster"}
-            />
-            <div>
-              <p>{show.artist} at {show.location}</p>
-              <p>Time: {timeSlotMap[show.time_slot] || "Unknown"}</p>
-              <button onClick={() => handleRemoveShow(show.id)}>Remove Show</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+  <ul>
+    {(user.attributes.schedule || []).map((show, index) => (
+      <li key={show.id}>
+        <img
+          src={
+            unsplashImages[index % unsplashImages.length]?.url ||
+            "https://via.placeholder.com/200"
+          }
+          alt={show.artist || "Show Poster"}
+        />
+        <div className="stage-box">
+          <p>{show.artist} at {show.location}</p>
+          <p>Time: {timeSlotMap[show.time_slot] || "Unknown"}</p>
+        </div>
+        <button onClick={() => handleRemoveShow(show.id)}>Remove Show</button>
+      </li>
+    ))}
+  </ul>
 
       <div>
         <h3>Add a Show</h3>

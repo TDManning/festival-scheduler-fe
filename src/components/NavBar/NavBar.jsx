@@ -29,7 +29,7 @@ function NavBar() {
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
         />
-        <button type="submit">Search</button>
+        <button type="submit">View User Schedule</button>
       </form>
     </nav>
   );
