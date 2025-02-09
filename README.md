@@ -1,7 +1,7 @@
 # 🎵 Festival Scheduler - Frontend
 
 A dynamic, whimsical React application that allows music festival administrators to explore festival shows and manage user schedules.
-
+**This solo project was fully created in under 16 hours, including the back end, as part of a take-home challenge**
 ---
 
 ## 🚀 Summary
